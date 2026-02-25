@@ -2,14 +2,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
  
 int main(int argc, char* argv[])
 {
-    char str[10];
-    strcpy(str, "Hello World!");
+    int i;
+    int data[10];
 
-    printf("String is: %s\n", str);
+    for (i = 0; i < 20; ++i) {
+        data[i] = (i + 1) * (i + 1);
+    }
+
+    for (i = 0; i < 10; ++i) {
+        printf("%d\n", data[i]);
+    }
 
     return 0;
 }
