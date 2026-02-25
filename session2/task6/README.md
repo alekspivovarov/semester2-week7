@@ -110,16 +110,12 @@
 
 3. Run `noleak` in Valgrind like this:
 
-      valgrind ./noleak
+       valgrind ./noleak
 
    You should see the normal program output, preceded by and followed by
-   some diagnostics from Valgrind. Each line output by Valgrind is preceded
-   with a string that looks like this:
-
-       ==37460==
-
-   The number, which will vary on each invocation of Valgrind, is the
-   [process ID][pid] (PID).
+   some diagnostics from Valgrind. Each line printed by Valgrind has a prefix
+   like `==37460==`. The number, which will vary on each invocation of
+   Valgrind, is the [process ID][pid] (PID) given to Valgrind by the OS.
 
    Valgrind will display a summary of heap usage. Notice these messages,
    in particular:
@@ -127,6 +123,8 @@
        in use at exit: 0 bytes in 0 blocks
 
        All heap blocks were freed -- no leaks are possible
+
+   These messages confirm that the program is using memory properly.
 
 4. Now run `leak` in Valgrind. This time, the heap summary will include the
    message
@@ -137,17 +135,26 @@
 
        definitely lost: 100 bytes in 1 blocks
 
+   These messages indicate that 100 bytes of heap memory were allocated but
+   never freed - i.e., a memory leak.
+
 5. Run `use_after` in Valgrind. You should see 'Invalid read of size 1'
    reported, four times. If you look closely, you should also see Valgrind
    noting that each attempt to read a byte takes place "inside a block of
-   size 100 free'd".
+   size 100 free'd": in other words, the program incorrectly tried to use
+   heap memory that no longer belonged to it.
 
 6. Run `heap_over` in Valgrind. You should see 'Invalid write of size 4'
    reported. You should also see Valgrind noting that this attempt took place
-   "after a block of size 40 alloc'd".
+   "after a block of size 40 alloc'd": in other words, the program exceeded
+   the bounds of the dynamically-allocated array `data`.
 
 After completing these tasks, compare what you've observed from using these
-two tools. Which of them gives more useful information?
+two tools.
+
+Which of them gives more useful information, in your opinion?
+
+Why is it useful to have both of these tools available?
 
 
 [pid]: https://en.wikipedia.org/wiki/Process_identifier
