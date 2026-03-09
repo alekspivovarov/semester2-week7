@@ -11,9 +11,9 @@ int main(void)
     a[2] = 3;
     a[3] = 2;
 
-    free(a);
+    free(a); // releases the memory back to heap
 
-    free(a);
+    free(a); // double free - a still points to same address, but memory is already freed
 
     return 0;
 }

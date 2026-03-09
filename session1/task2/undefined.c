@@ -6,7 +6,7 @@ int main(void)
 {
     int i, j;
 
-    j = i + 3;
+    j = i + 3; # i was nit initialised
 
     printf("%d\n", j);
 
